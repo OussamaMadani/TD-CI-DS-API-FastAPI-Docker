@@ -8,7 +8,7 @@ def test_read_root():
         response = client.get("/")
 
     assert response.status_code == 200
-    assert response.json() == {"message": "API is intentionally broken!"}
+    assert response.json() == {"message": "API is up and running!"}
 
 
 def test_predict():

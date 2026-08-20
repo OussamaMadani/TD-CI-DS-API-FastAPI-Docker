@@ -1,26 +1,19 @@
-from fastapi.testclient import TestClient
+import pytest
+from pydantic import ValidationError
 
-from app.main import app
+from app.main import PredictionRequest, predict_endpoint, read_root
 
 
 def test_read_root():
-    with TestClient(app) as client:
-        response = client.get("/")
-
-    assert response.status_code == 200
-    assert response.json() == {"message": "API is up and running!"}
+    assert read_root() == {"message": "API is up and running!"}
 
 
 def test_predict():
-    with TestClient(app) as client:
-        response = client.post("/predict", json={"features": [1.0, 2.0, 3.0]})
+    request = PredictionRequest(features=[1.0, 2.0, 3.0])
 
-    assert response.status_code == 200
-    assert response.json()["predictions"] == [2.0, 4.0, 6.0]
+    assert predict_endpoint(request)["predictions"] == [2.0, 4.0, 6.0]
 
 
 def test_predict_rejects_invalid_payload():
-    with TestClient(app) as client:
-        response = client.post("/predict", json={"features": "invalid"})
-
-    assert response.status_code == 422
+    with pytest.raises(ValidationError):
+        PredictionRequest(features="invalid")

@@ -13,6 +13,11 @@ jobs:
   lint:
     runs-on: ubuntu-24.04
     steps:
+      - name: Runner infos
+        run: |
+          echo "Runner name : $RUNNER_NAME"
+          echo "Runner OS   : $RUNNER_OS"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -36,6 +41,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: lint
     steps:
+      - name: Runner infos
+        run: |
+          echo "Runner name : $RUNNER_NAME"
+          echo "Runner OS   : $RUNNER_OS"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -62,6 +72,11 @@ jobs:
       matrix:
         python-version: ["3.10", "3.11"]
     steps:
+      - name: Runner infos
+        run: |
+          echo "Runner name : $RUNNER_NAME"
+          echo "Runner OS   : $RUNNER_OS"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -91,6 +106,11 @@ jobs:
     runs-on: ubuntu-24.04
     needs: tests
     steps:
+      - name: Runner infos
+        run: |
+          echo "Runner name : $RUNNER_NAME"
+          echo "Runner OS   : $RUNNER_OS"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -110,6 +130,11 @@ jobs:
     needs: tests
     if: github.event_name == 'push'
     steps:
+      - name: Runner infos
+        run: |
+          echo "Runner name : $RUNNER_NAME"
+          echo "Runner OS   : $RUNNER_OS"
+
       - name: Checkout code
         uses: actions/checkout@v4
 

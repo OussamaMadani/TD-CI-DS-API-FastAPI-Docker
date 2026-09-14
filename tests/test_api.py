@@ -17,3 +17,14 @@ def test_predict():
 def test_predict_rejects_invalid_payload():
     with pytest.raises(ValidationError):
         PredictionRequest(features="invalid")
+        
+def test_predict_incorrect():
+    request = PredictionRequest(features=[1.0, 2.0, 3.0])
+
+    assert predict_endpoint(request)["predictions"] != [3.0, 6.0, 9.0]
+
+def test_missing_features():
+    invalid_payload = {"wrong_field": [3.5, 1.2, 4.9]}
+
+    with pytest.raises(ValidationError):
+        PredictionRequest(**invalid_payload)

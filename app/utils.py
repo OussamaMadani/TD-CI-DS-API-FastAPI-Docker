@@ -7,6 +7,7 @@ y_train = np.array([2, 4, 6, 8])  # y = 2 * x
 model = LinearRegression()
 model.fit(X_train, y_train)
 
+
 def predict(features):
     """Primiți o listă de caracteristici și returnați predicția."""
     features = np.array(features).reshape(-1, 1)
